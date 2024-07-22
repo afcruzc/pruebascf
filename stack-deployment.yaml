@@ -2,6 +2,7 @@ template-file-path: ./vpc.yaml
 
 parameters: 
   VpcCidr: 10.55.0.0/16
-tags:
-    cost-center: '123456'
-    org: 'AWS'
+  VpcName: MyGitVPC
+#tags:
+#    cost-center: '123456'
+#    org: 'AWS'
