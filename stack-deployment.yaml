@@ -1,11 +1,7 @@
 template-file-path: ./vpc.yaml
 
 parameters: 
-    image: public.ecr.aws/lts/nginx:latest
-    task_size: x-small
-    max_capacity: 5
-    port: 8080
-    env: production
+  VpcCidr: 10.55.0.0/16
 tags:
     cost-center: '123456'
     org: 'AWS'
