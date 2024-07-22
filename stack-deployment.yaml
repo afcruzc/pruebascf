@@ -1,11 +1,3 @@
-template-file-path: ./vpc.yaml
-
-parameters: 
-    image: public.ecr.aws/lts/nginx:latest
-    task_size: x-small
-    max_capacity: 5
-    port: 8080
-    env: production
-tags:
-    cost-center: '123456'
-    org: 'AWS'
+template-file-path: vpc.yaml
+parameters: {}
+tags: {}
