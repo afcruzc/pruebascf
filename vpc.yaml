@@ -1,17 +1,54 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Plantilla base de CloudFormation para una VPC con una subred privada y una subred pública.
+Description: Plantilla base de CloudFormation para una VPC con una subred privada y una subred pública, con parámetros personalizables.
+
+Parameters:
+  VpcCidr:
+    Description: El bloque CIDR para la VPC
+    Type: String
+    Default: 10.40.0.0/16
+    AllowedPattern: ^(\d{1,3}\.){3}\d{1,3}/\d{1,2}$
+    ConstraintDescription: debe ser un bloque CIDR válido.
+    
+  VpcName:
+    Description: El nombre de la VPC
+    Type: String
+    Default: MyVPC
+    
+  PublicSubnetCidr:
+    Description: El bloque CIDR para la subred pública
+    Type: String
+    Default: 10.40.1.0/24
+    AllowedPattern: ^(\d{1,3}\.){3}\d{1,3}/\d{1,2}$
+    ConstraintDescription: debe ser un bloque CIDR válido.
+
+  PublicSubnetName:
+    Description: El nombre de la subred pública
+    Type: String
+    Default: MyPublicSubnet
+
+  PrivateSubnetCidr:
+    Description: El bloque CIDR para la subred privada
+    Type: String
+    Default: 10.40.2.0/24
+    AllowedPattern: ^(\d{1,3}\.){3}\d{1,3}/\d{1,2}$
+    ConstraintDescription: debe ser un bloque CIDR válido.
+
+  PrivateSubnetName:
+    Description: El nombre de la subred privada
+    Type: String
+    Default: MyPrivateSubnet
 
 Resources:
   # VPC
   MyVPC:
     Type: 'AWS::EC2::VPC'
     Properties:
-      CidrBlock: 10.40.0.0/16
+      CidrBlock: !Ref VpcCidr
       EnableDnsSupport: true
       EnableDnsHostnames: true
       Tags:
         - Key: Name
-          Value: MyVPC
+          Value: !Ref VpcName
 
   # Internet Gateway
   MyInternetGateway:
@@ -33,23 +70,23 @@ Resources:
     Type: 'AWS::EC2::Subnet'
     Properties:
       VpcId: !Ref MyVPC
-      CidrBlock: 10.40.1.0/24
+      CidrBlock: !Ref PublicSubnetCidr
       MapPublicIpOnLaunch: true
       AvailabilityZone: !Select [ 0, !GetAZs '' ]
       Tags:
         - Key: Name
-          Value: MyPublicSubnet
+          Value: !Ref PublicSubnetName
 
   # Private Subnet
   MyPrivateSubnet:
     Type: 'AWS::EC2::Subnet'
     Properties:
       VpcId: !Ref MyVPC
-      CidrBlock: 10.40.2.0/24
+      CidrBlock: !Ref PrivateSubnetCidr
       AvailabilityZone: !Select [ 0, !GetAZs '' ]
       Tags:
         - Key: Name
-          Value: MyPrivateSubnet
+          Value: !Ref PrivateSubnetName
 
   # Route Table for Public Subnet
   MyPublicRouteTable:
