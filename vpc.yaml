@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Plantilla base de CloudFormation para una VPC con una subred privada y una subred pública, con parámetros personalizables.
+Description: Plantilla base de CloudFormation para una VPC con una subred privada y una subred pública, con parámetros.
 
 Parameters:
   VpcCidr:
